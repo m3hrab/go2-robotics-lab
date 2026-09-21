@@ -10,7 +10,7 @@ if pgrep -f "go2_config.*gazebo" > /dev/null; then
     echo "Gazebo already running"
 else
     cd /home/vscode/go2_ws
-    nohup ros2 launch go2_config gazebo.launch.py rviz:=true > /tmp/gazebo.log 2>&1 &
+    nohup ros2 launch go2_config gazebo.launch.py rviz:=false > /tmp/gazebo.log 2>&1 &
 fi
 
 if pgrep -f rosbridge_websocket > /dev/null; then

@@ -49,4 +49,8 @@ USER vscode
 WORKDIR /home/vscode/go2_ws
 RUN bash -c "source /opt/ros/humble/setup.bash && colcon build --symlink-install"
 
-RUN echo 'source ~/go2_ws/install/setup.bash' >> ~/.bashrc
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc \
+ && echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc \
+ && echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> ~/.bashrc \
+ && echo 'export ROS_DOMAIN_ID=30' >> ~/.bashrc \
+ && echo 'source ~/go2_ws/install/setup.bash' >> ~/.bashrc
