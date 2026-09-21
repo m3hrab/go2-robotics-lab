@@ -1,0 +1,18 @@
+{
+  "name": "go2-robotics-lab",
+  "build": { "dockerfile": "Dockerfile" },
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "password": "vscode",
+      "webPort": "6080",
+      "vncPort": "5901"
+    }
+  },
+  "forwardPorts": [6080, 9090],
+  "portsAttributes": {
+    "6080": { "label": "Gazebo (noVNC)", "onAutoForward": "openBrowser" },
+    "9090": { "label": "rosbridge (Foxglove)", "onAutoForward": "notify" }
+  },
+  "postCreateCommand": "bash .devcontainer/post_create.sh",
+  "postStartCommand": "bash .devcontainer/post_start.sh"
+}
