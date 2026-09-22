@@ -2,15 +2,18 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-22.04
     container:
       image: ros:humble-ros-base-jammy
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - uses: actions/checkout@v4
@@ -33,8 +36,8 @@ jobs:
           python3 -c "import sfl_robot; print('sfl_robot OK')"
           python3 -c "from sfl_robot.robot import Robot; print('Robot OK')"
 
-      - name: Lint
-        run: ruff check sfl_robot/ lessons/
+      - name: Lint with Ruff
+        run: ruff check sfl_robot/ lessons/ tests/
 
       - name: Run tests
         run: |
