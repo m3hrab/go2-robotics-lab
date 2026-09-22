@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-# Wait for desktop-lite to bring up VNC / Xvfb
 sleep 8
 
 # ── Environment ──────────────────────────────────────────────
@@ -19,25 +18,18 @@ if ! pgrep -f "Xvfb :99" > /dev/null; then
 fi
 export DISPLAY=:99
 
-# ── Python Package ───────────────────────────────────────────
+# ── Python package ───────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-if command -v pip3 > /dev/null 2>&1; then
-    echo "Installing editable Python package from ${REPO_ROOT}"
-    pip3 install -e "${REPO_ROOT}"
-else
-    echo "pip3 is not installed. Rebuild the dev container." >&2
-    exit 1
-fi
+pip3 install -e "${REPO_ROOT}"
 
 # ── Gazebo ───────────────────────────────────────────────────
 if pgrep -f "go2_config.*gazebo" > /dev/null; then
     echo "Gazebo already running"
 else
     cd /home/vscode/go2_ws
-    nohup ros2 launch go2_config gazebo_velodyne.launch.py rviz:=false \
-        world="${REPO_ROOT}/worlds/classroom.world" \
+    nohup ros2 launch go2_config gazebo.launch.py rviz:=false \
         > /tmp/gazebo.log 2>&1 &
     echo "Gazebo launched (log: /tmp/gazebo.log)"
 fi
