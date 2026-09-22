@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-22.04
+    container:
+      image: ros:humble-ros-base-jammy
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            python3-pip python3-colcon-common-extensions python3-rosdep
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install -e ".[dev]"
+
+      - name: Verify package imports
+        run: |
+          source /opt/ros/humble/setup.bash
+          python3 -c "import sfl_robot; print('sfl_robot OK')"
+          python3 -c "from sfl_robot.robot import Robot; print('Robot OK')"
+
+      - name: Lint with Ruff
+        run: ruff check sfl_robot/ lessons/ tests/
+
+      - name: Run tests
+        run: |
+          source /opt/ros/humble/setup.bash
+          python3 -m pytest tests/ -v

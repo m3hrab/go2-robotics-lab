@@ -1,18 +1,37 @@
 {
-  "name": "go2-robotics-lab",
-  "build": { "dockerfile": "Dockerfile" },
+  "name": "Unitree Go2 ROS2",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
     "ghcr.io/devcontainers/features/desktop-lite:1": {
-      "password": "vscode",
-      "webPort": "6080",
-      "vncPort": "5901"
+      "version": "latest"
     }
   },
-  "forwardPorts": [6080, 9090],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "formulahendry.code-runner",
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ],
+      "settings": {
+        "code-runner.runInTerminal": true,
+        "code-runner.saveFileBeforeRun": true,
+        "code-runner.executorMap": {
+          "python": "source /opt/ros/humble/setup.bash && source /usr/share/gazebo/setup.sh && source /home/vscode/go2_ws/install/setup.bash && export ROS_DOMAIN_ID=30 && export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp && export LIBGL_ALWAYS_SOFTWARE=1 && python3 -u"
+        }
+      }
+    }
+  },
+  "forwardPorts": [6080],
   "portsAttributes": {
-    "6080": { "label": "Gazebo (noVNC)", "onAutoForward": "openBrowser" },
-    "9090": { "label": "rosbridge (Foxglove)", "onAutoForward": "notify" }
+    "6080": {
+      "label": "noVNC Desktop",
+      "onAutoForward": "openBrowser"
+    }
   },
   "postCreateCommand": "bash .devcontainer/post_create.sh",
-  "postStartCommand": "bash .devcontainer/post_start.sh"
+  "postStartCommand": "bash .devcontainer/post_start.sh",
+  "remoteUser": "vscode"
 }

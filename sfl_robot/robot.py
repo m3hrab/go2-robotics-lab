@@ -1,4 +1,5 @@
 import os
+
 import yaml
 
 
@@ -33,6 +34,8 @@ class Robot:
 
     def turn(self, deg):
         """Turn in place by deg degrees. Positive is left, negative is right."""
+        if not isinstance(deg, (int, float)):
+            raise RobotError("turn expects a number of degrees, e.g. robot.turn(90)")
         self._backend.turn(deg)
 
     def stand(self):

@@ -1,8 +1,18 @@
 [project]
 name = "sfl-robot"
 version = "0.1.0"
+description = "SFL Robot lessons for Unitree Go2 in ROS2/Gazebo"
 requires-python = ">=3.10"
-dependencies = ["pyyaml"]
+dependencies = [
+    "pyyaml",
+    "numpy",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
 
 [tool.setuptools.packages.find]
 include = ["sfl_robot*"]

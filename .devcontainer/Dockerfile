@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-humble-robot-localization ros-humble-ros2-controllers ros-humble-ros2-control \
     ros-humble-rosbridge-suite ffmpeg \
     python3-rosdep python3-vcstool \
+    xvfb x11-utils \
  && rm -rf /var/lib/apt/lists/*
 
 RUN rosdep init || true
