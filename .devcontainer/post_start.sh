@@ -6,6 +6,17 @@ source /home/vscode/go2_ws/install/setup.bash
 export ROS_DOMAIN_ID=30
 export LIBGL_ALWAYS_SOFTWARE=1
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+if command -v pip3 > /dev/null 2>&1; then
+    echo "Installing editable Python package from ${REPO_ROOT}"
+    pip3 install -e "${REPO_ROOT}"
+else
+    echo "pip3 is not installed. Rebuild the dev container to install python3-pip." >&2
+    exit 1
+fi
+
 if pgrep -f "go2_config.*gazebo" > /dev/null; then
     echo "Gazebo already running"
 else
