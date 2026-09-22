@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+
 sleep 5
 source /opt/ros/humble/setup.bash
 source /usr/share/gazebo/setup.sh
