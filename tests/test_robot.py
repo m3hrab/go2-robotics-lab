@@ -13,15 +13,12 @@ def test_unknown_target_raises(tmp_path):
 
 
 def test_walk_to_rejects_strings():
-    # We don't build a real Robot here (needs ROS); test the guard directly
-    from sfl_robot.robot import Robot
     r = object.__new__(Robot)
     with pytest.raises(RobotError):
         Robot.walk_to(r, "a", 1)
 
 
 def test_turn_rejects_strings():
-    from sfl_robot.robot import Robot
     r = object.__new__(Robot)
     with pytest.raises(RobotError):
         Robot.turn(r, "left")
