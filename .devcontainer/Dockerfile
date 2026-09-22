@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
 RUN rosdep init || true
+RUN rosdep fix-permissions || true
 
 RUN echo "source /opt/ros/humble/setup.bash" >> /etc/skel/.bashrc \
  && echo "source /usr/share/gazebo/setup.sh" >> /etc/skel/.bashrc \
@@ -46,7 +47,7 @@ WORKDIR /home/vscode/go2_ws/src
 RUN git clone https://github.com/anujjain-dev/unitree-go2-ros2.git
 
 USER root
-RUN rosdep update
+RUN rosdep update || rosdep update || true
 RUN bash -c "source /opt/ros/humble/setup.bash && cd /home/vscode/go2_ws && rosdep install --from-paths src --ignore-src -r -y" || true
 
 USER vscode
