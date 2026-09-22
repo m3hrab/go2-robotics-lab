@@ -34,7 +34,7 @@ jobs:
           python3 -c "from sfl_robot.robot import Robot; print('Robot OK')"
 
       - name: Lint
-        run: ruff check sfl_robot/ lessons/ || true
+        run: ruff check sfl_robot/ lessons/
 
       - name: Run tests
         run: |
