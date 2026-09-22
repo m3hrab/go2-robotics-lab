@@ -37,6 +37,7 @@ if pgrep -f "go2_config.*gazebo" > /dev/null; then
 else
     cd /home/vscode/go2_ws
     nohup ros2 launch go2_config gazebo_velodyne.launch.py rviz:=false \
+        world="${REPO_ROOT}/worlds/classroom.world" \
         > /tmp/gazebo.log 2>&1 &
     echo "Gazebo launched (log: /tmp/gazebo.log)"
 fi
