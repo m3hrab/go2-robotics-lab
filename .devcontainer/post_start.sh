@@ -19,10 +19,15 @@ fi
 export DISPLAY=:99
 
 # ── Python package ───────────────────────────────────────────
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="/workspaces/${GITHUB_REPOSITORY##*/}"
+if [ ! -d "${REPO_ROOT}" ]; then
+    REPO_ROOT="/workspaces/go2-robotics-lab"
+fi
 
-pip3 install -e "${REPO_ROOT}"
+if [ -d "${REPO_ROOT}" ]; then
+    echo "Installing sfl_robot from ${REPO_ROOT}"
+    pip3 install -e "${REPO_ROOT}" || true
+fi
 
 # ── Gazebo ───────────────────────────────────────────────────
 if pgrep -f "go2_config.*gazebo" > /dev/null; then
